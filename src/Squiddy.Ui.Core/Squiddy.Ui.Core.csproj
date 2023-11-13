@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>0.0.1</Version>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -9,11 +8,12 @@
 
 
     <ItemGroup>
-        <PackageReference Include="ReactiveUI" Version="19.4.1"/>
-        <PackageReference Include="Terminal.Gui" Version="1.14.1"/>
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Squiddy.Core\Squiddy.Core.csproj"/>
+        <PackageReference Include="Avalonia" Version="11.0.5" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.5" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <ProjectReference Include="..\Squiddy.Core\Squiddy.Core.csproj" />
+    </ItemGroup>
 </Project>

@@ -1,15 +1,18 @@
-﻿using System.Reactive.Concurrency;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ReactiveUI;
 using Serilog;
-using Serilog.Events;
 using Serilog.Formatting.Json;
-using Serilog.Sinks.SpectreConsole;
+using Splat;
+using Splat.Microsoft.Extensions.DependencyInjection;
 using Squiddy.Core.Attributes.Services;
 using Squiddy.Core.Data.Configs;
 using Squiddy.Core.Data.Directories;
@@ -18,16 +21,12 @@ using Squiddy.Core.Interfaces.Services;
 using Squiddy.Core.MethodEx.Services;
 using Squiddy.Core.MethodEx.Utils;
 using Squiddy.Core.Services.Interfaces;
-using Squiddy.Gui.Controls.ViewModels;
-using Squiddy.Gui.Controls.Views;
 using Squiddy.Gui.Impl.Services;
-using Squiddy.Gui.Windows;
-using Squiddy.Gui.Windows.ViewModels;
-using Squiddy.Gui.Windows.Views;
+using Squiddy.Gui.ViewModels;
+using Squiddy.Gui.Views;
 using Squiddy.Ui.Core.MethodEx;
-using Squiddy.Ui.Core.Schedulers;
-using Terminal.Gui;
 using ILogger = Serilog.ILogger;
+
 
 namespace Squiddy.Gui.Bootstrap;
 
@@ -41,10 +40,7 @@ public class SquiddyBootstrap : ISquiddyBootstrap
 
     public SquiddyBootstrap(LoggerConfiguration loggerConfiguration)
     {
-        _loggerConfiguration = loggerConfiguration.WriteTo.SpectreConsole(
-                "{Timestamp:HH:mm:ss} [{Level:u4}] {Message:lj}{NewLine}{Exception}",
-                minLevel: LogEventLevel.Information
-            )
+        _loggerConfiguration = loggerConfiguration
             .WriteTo.Console();
     }
 
@@ -67,7 +63,7 @@ public class SquiddyBootstrap : ISquiddyBootstrap
         );
     }
 
-    private async Task LoadConfig(IServiceCollection services)
+    private void LoadConfig(IServiceCollection services)
     {
         var rootDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         // If linux or osx get .config directory
@@ -94,42 +90,46 @@ public class SquiddyBootstrap : ISquiddyBootstrap
             File.WriteAllTextAsync(configFileName, new SquiddyConfig().ToJson());
         }
 
-        var config = (await File.ReadAllTextAsync(configFileName)).FromJson<SquiddyConfig>();
+        var config = File.ReadAllText(configFileName).FromJson<SquiddyConfig>();
 
         services.AddSingleton<IOptions<SquiddyConfig>>(new OptionsWrapper<SquiddyConfig>(config));
     }
 
-    public Task RunHostAsync(string[] args)
+    public async Task<IHost> BuildHostAsync(string[] args)
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices(
                 services =>
                 {
-                    LoadConfig(services).GetAwaiter().GetResult();
+                    LoadConfig(services);
 
                     BuildLogger(services);
+
+                    services.UseMicrosoftDependencyResolver();
+                    var resolver = Locator.CurrentMutable;
+                    resolver.InitializeSplat();
+                    resolver.InitializeReactiveUI();
+
+                    services.AddHttpClient();
+
                     services = services
                         .AddSingleton<ISquiddyBootstrap>(this)
-                        .RegisterMessageBus()
-                        .AddHostedService<SquiddyBootstrapInterceptor>();
+                        .RegisterMessageBus();
+                    //.AddHostedService<SquiddyBootstrapInterceptor>();
 
                     //Register services
                     services
                         .AddSingleton<IMessageBusService, MessageBusService>();
 
+                    services.RegisterViewAndViewModel<MainWindow, MainWindowViewModel>();
 
-                    services
-                        .RegisterWindowAndViewModel<MainWindowView, MainWindowViewModel>();
-
-                    services
-                        .RegisterUserControlAndViewModel<MenuBarControlView, MenuBarControlViewModel>();
 
                     services.AddSingleton(services);
 
                     _servicesFunc.Invoke(services);
                 }
             )
-            .RunConsoleAsync();
+            .Build();
     }
 
 
@@ -167,18 +167,5 @@ public class SquiddyBootstrap : ISquiddyBootstrap
 
     public async Task RunApplicationAsync(IServiceProvider serviceProvider, IHost host)
     {
-        Application.QuitKey = Key.CtrlMask | Key.C;
-        Application.Init();
-        RxApp.MainThreadScheduler = TerminalScheduler.Default;
-        RxApp.TaskpoolScheduler = TaskPoolScheduler.Default;
-        Application.Run(serviceProvider.GetRequiredService<MainWindowView>(), ErrorHandler);
-        Application.Shutdown();
-        await host.StopAsync();
-    }
-
-    private bool ErrorHandler(Exception arg)
-    {
-        _logger.Error(arg, "Error in application");
-        return true;
     }
 }

@@ -6,7 +6,7 @@ namespace Squiddy.Core.Interfaces.Bootstrap;
 public interface ISquiddyBootstrap
 {
 
-    Task RunHostAsync(string[] args);
+    Task<IHost> BuildHostAsync(string[] args);
 
     Task ConfigureServices(Func<IServiceCollection, IServiceCollection> services);
 
