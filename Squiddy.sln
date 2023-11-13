@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Gui", "src\Squiddy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Ui.Core", "src\Squiddy.Ui.Core\Squiddy.Ui.Core.csproj", "{AE540E19-9071-43EA-B73B-C33910D62C7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Connectors", "src\Squiddy.Connectors\Squiddy.Connectors.csproj", "{5A9CC29A-E674-4C00-BADB-C3BD685822A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{AE540E19-9071-43EA-B73B-C33910D62C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE540E19-9071-43EA-B73B-C33910D62C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE540E19-9071-43EA-B73B-C33910D62C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A9CC29A-E674-4C00-BADB-C3BD685822A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A9CC29A-E674-4C00-BADB-C3BD685822A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A9CC29A-E674-4C00-BADB-C3BD685822A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A9CC29A-E674-4C00-BADB-C3BD685822A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
