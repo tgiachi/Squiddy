@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Core", "src\Squiddy.Core\Squiddy.Core.csproj", "{733A8E31-F2FF-4465-9679-D3273E26B745}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Tests", "tests\Squiddy.Tests\Squiddy.Tests.csproj", "{E866B82A-D880-42B7-9DF0-56936C97EF3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Gui", "src\Squiddy.Gui\Squiddy.Gui.csproj", "{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{733A8E31-F2FF-4465-9679-D3273E26B745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733A8E31-F2FF-4465-9679-D3273E26B745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733A8E31-F2FF-4465-9679-D3273E26B745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733A8E31-F2FF-4465-9679-D3273E26B745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E866B82A-D880-42B7-9DF0-56936C97EF3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E866B82A-D880-42B7-9DF0-56936C97EF3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E866B82A-D880-42B7-9DF0-56936C97EF3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E866B82A-D880-42B7-9DF0-56936C97EF3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
