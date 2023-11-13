@@ -1,5 +1,7 @@
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Squiddy.Core.Attributes.Configs;
 using Squiddy.Core.Utils.Serializers.Json;
 
 namespace Squiddy.Core.MethodEx.Utils;
@@ -9,7 +11,7 @@ namespace Squiddy.Core.MethodEx.Utils;
 /// </summary>
 public static class JsonMethodEx
 {
-    private const string JSON_TYPE_KEY = "$type";
+    public const string JSON_TYPE_KEY = "$type";
 
     private static readonly JsonSerializerOptions JsonSerializerSettings = JsonSerializerUtility.DefaultOptions;
 
@@ -57,6 +59,24 @@ public static class JsonMethodEx
             throw;
         }
     }
+
+    public static async Task<string> SerializeWithType(this object obj)
+    {
+        var element = JsonSerializer.SerializeToNode(obj, JsonSerializerSettings);
+        if (obj.GetType().GetCustomAttribute<SerializeTypeAttribute>() != null)
+        {
+            var type = obj.GetType().GetCustomAttribute<SerializeTypeAttribute>().TypeName;
+            element[JSON_TYPE_KEY] = type;
+        }
+
+        return element.ToString();
+    }
+
+    public static async Task SerializeWithTypeToFile(this object obj, string fileName)
+    {
+        await File.WriteAllTextAsync(fileName, await obj.SerializeWithType());
+    }
+
 
     public static async Task<Dictionary<string, List<string>>> DeserializeTypesFromFile(this string path)
     {

@@ -39,6 +39,11 @@ public class DirectoriesConfig
         {
             Directories[directory.Key] = Path.Combine(rootDirectory, directory.Value.ToUnderscoreCase());
             //Directory.CreateDirectory(Directories[directory.Key]);
+
+            if (!Directory.Exists(Directories[directory.Key]))
+            {
+                Directory.CreateDirectory(Directories[directory.Key]);
+            }
         }
     }
 
