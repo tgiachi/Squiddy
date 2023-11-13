@@ -15,8 +15,11 @@ public class SquiddyBootstrapInterceptor : IHostedService
     private readonly IHost _host;
 
     public SquiddyBootstrapInterceptor(
-        ILogger<SquiddyBootstrapInterceptor> logger, IHostApplicationLifetime applicationLifetime, IServiceCollection serviceCollection,
-        ISquiddyBootstrap bootstrap, IServiceProvider serviceProvider, IHost host
+        ILogger<SquiddyBootstrapInterceptor> logger, IHostApplicationLifetime applicationLifetime,
+        IServiceCollection serviceCollection,
+        ISquiddyBootstrap bootstrap,
+        IServiceProvider serviceProvider,
+        IHost host
     )
     {
         _host = host;
@@ -26,7 +29,6 @@ public class SquiddyBootstrapInterceptor : IHostedService
         _serviceCollection = serviceCollection;
         applicationLifetime.ApplicationStarted.Register(OnStarted);
         applicationLifetime.ApplicationStopping.Register(OnStopping);
-
     }
 
     private void OnStopping()
