@@ -1,16 +1,15 @@
-﻿using Squiddy.Gui.Views;
+﻿using Squiddy.Gui.Windows.Views;
 using Squiddy.Ui.Core.Impl.Windows;
 
-namespace Squiddy.Gui.ViewModels;
+namespace Squiddy.Gui.Windows.ViewModels;
 
 public class MainWindowViewModel : AbstractBaseViewModel<MainWindow>
 {
-    public string Greeting => "Welcome to Avalonia!";
 
 
     public override void Initialize()
     {
-        View.Title = "Sto cazzo";
+        View.Title = "Squiddy";
         base.Initialize();
     }
 }

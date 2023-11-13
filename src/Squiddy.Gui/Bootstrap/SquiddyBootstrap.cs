@@ -21,9 +21,11 @@ using Squiddy.Core.Interfaces.Services;
 using Squiddy.Core.MethodEx.Services;
 using Squiddy.Core.MethodEx.Utils;
 using Squiddy.Core.Services.Interfaces;
+using Squiddy.Gui.Controls.ViewModels;
+using Squiddy.Gui.Controls.Views;
 using Squiddy.Gui.Impl.Services;
-using Squiddy.Gui.ViewModels;
-using Squiddy.Gui.Views;
+using Squiddy.Gui.Windows.ViewModels;
+using Squiddy.Gui.Windows.Views;
 using Squiddy.Ui.Core.MethodEx;
 using ILogger = Serilog.ILogger;
 
@@ -123,6 +125,7 @@ public class SquiddyBootstrap : ISquiddyBootstrap
 
                     services.RegisterViewAndViewModel<MainWindow, MainWindowViewModel>();
 
+                    services.RegisterViewAndViewModel<MainConsoleUserControl, MainConsoleUserControlViewModel>();
 
                     services.AddSingleton(services);
 

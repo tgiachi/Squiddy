@@ -8,8 +8,8 @@ using Serilog;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Squiddy.Core.Interfaces.Bootstrap;
 using Squiddy.Gui.Bootstrap;
-using Squiddy.Gui.ViewModels;
-using Squiddy.Gui.Views;
+using Squiddy.Gui.Windows.ViewModels;
+using Squiddy.Gui.Windows.Views;
 
 namespace Squiddy.Gui;
 

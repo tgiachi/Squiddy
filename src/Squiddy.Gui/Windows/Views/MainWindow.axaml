@@ -1,17 +1,20 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Squiddy.Gui.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Squiddy.Gui.Windows.ViewModels"
+        xmlns:views="clr-namespace:Squiddy.Gui.Controls.Views"
+        xmlns:viewModels1="clr-namespace:Squiddy.Gui.Controls.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Width="800" Height="450"
-        x:Class="Squiddy.Gui.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        FontFamily="Arial"
+        x:Class="Squiddy.Gui.Windows.Views.MainWindow"
+        x:DataType="viewModels:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="Squiddy.Gui">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel />
+        <viewModels:MainWindowViewModel />
     </Design.DataContext>
 
    <DockPanel>
@@ -20,10 +23,12 @@
        </Menu>
 
        <TabControl>
-           <TabItem Header="Tab 1"/>
+           <TabItem Header="Tab 1">
+               <viewModels1:MainConsoleUserControlViewModel />
+               </TabItem>
            <TabItem Header="Tab 1"/>
        </TabControl>
-       
+
    </DockPanel>
 
 </Window>

@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Squiddy.Gui.Views;
+namespace Squiddy.Gui.Windows.Views;
 
 public partial class MainWindow : Window
 {

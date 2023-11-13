@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
 using System;
+using Avalonia.Media;
 
 namespace Squiddy.Gui;
 
@@ -15,9 +16,23 @@ class Program
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
+    {
+        FontManagerOptions options = new();
+        if (OperatingSystem.IsLinux())
+        {
+            options.DefaultFamilyName = "Arial";
+        }
+        else if (OperatingSystem.IsMacOS())
+        {
+            options.DefaultFamilyName = "Monaco";
+        }
+
+        return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .UseSkia()
+            .WithInterFont()
             .LogToTrace()
-            .UseReactiveUI();
+            .UseReactiveUI()
+            .With(options);
+    }
 }

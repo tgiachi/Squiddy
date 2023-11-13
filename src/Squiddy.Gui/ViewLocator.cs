@@ -1,24 +1,33 @@
 using System;
+using System.Reflection;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
+using Squiddy.Ui.Core.Attributes;
 
 namespace Squiddy.Gui;
 
 public class ViewLocator : IDataTemplate
 {
-
     public Control Build(object data)
     {
-        var name = data.GetType().FullName!.Replace("ViewModel", "View");
-        var type = Type.GetType(name);
+        var app = (Squiddy.Gui.App)App.Current;
 
-        if (type != null)
+        if (data.GetType().GetCustomAttribute<ViewAttribute>() != null)
         {
-            return (Control)Activator.CreateInstance(type)!;
+            var attribute = data.GetType().GetCustomAttribute<ViewAttribute>();
+            var viewModel = app.Container.GetRequiredService(data.GetType());
+            var view = app.Container.GetRequiredService(attribute.ViewType) as UserControl;
+
+
+            view.DataContext = viewModel;
+            viewModel.GetType().GetMethod("Initialize")?.Invoke(viewModel, null);
+            return view;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+
+        return new TextBlock { Text = "Not Found: " + data.GetType().Name };
     }
 
     public bool Match(object data) => data is ReactiveObject;
