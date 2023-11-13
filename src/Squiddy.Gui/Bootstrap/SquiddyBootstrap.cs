@@ -79,7 +79,7 @@ public class SquiddyBootstrap : ISquiddyBootstrap
     {
         var servicesToStart = serviceCollection.AsParallel()
             .Where(
-                k => k.ImplementationType != null && k.ImplementationType.GetCustomAttribute<ServiceOrderAttribute>() != null
+                k => k.ImplementationType?.GetCustomAttribute<ServiceOrderAttribute>() != null
             )
             .Select(
                 s => (s.ImplementationType.GetCustomAttribute<ServiceOrderAttribute>().Order,
