@@ -1,9 +1,11 @@
-﻿using System.Reflection;
+﻿using System.Reactive.Concurrency;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ReactiveUI;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
@@ -17,6 +19,12 @@ using Squiddy.Core.MethodEx.Services;
 using Squiddy.Core.MethodEx.Utils;
 using Squiddy.Core.Services.Interfaces;
 using Squiddy.Gui.Impl.Services;
+using Squiddy.Gui.Schedulers;
+using Squiddy.Gui.Windows;
+using Squiddy.Gui.Windows.ViewModels;
+using Squiddy.Gui.Windows.Views;
+using Squiddy.Ui.Core.MethodEx;
+using Terminal.Gui;
 using ILogger = Serilog.ILogger;
 
 namespace Squiddy.Gui.Bootstrap;
@@ -107,6 +115,9 @@ public class SquiddyBootstrap : ISquiddyBootstrap
                     services
                         .AddSingleton<IMessageBusService, MessageBusService>();
 
+
+                    services.RegisterWindowAndViewModel<MainWindowView, MainWindowViewModel>();
+
                     services.AddSingleton(services);
 
                     _servicesFunc.Invoke(services);
@@ -146,5 +157,22 @@ public class SquiddyBootstrap : ISquiddyBootstrap
                 await squiddyService.StartAsync();
             }
         }
+    }
+
+    public Task RunApplicationAsync(IServiceProvider serviceProvider)
+    {
+        Application.QuitKey = Key.CtrlMask | Key.C;
+        Application.Init();
+        RxApp.MainThreadScheduler = TerminalScheduler.Default;
+        RxApp.TaskpoolScheduler = TaskPoolScheduler.Default;
+        Application.Run(serviceProvider.GetRequiredService<MainWindowView>(), ErrorHandler);
+        Application.Shutdown();
+        return Task.CompletedTask;
+    }
+
+    private bool ErrorHandler(Exception arg)
+    {
+        _logger.Error(arg, "Error in application");
+        return true;
     }
 }

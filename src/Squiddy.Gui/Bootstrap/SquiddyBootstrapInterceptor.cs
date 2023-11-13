@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Squiddy.Core.Interfaces.Bootstrap;
+using Terminal.Gui;
 
 namespace Squiddy.Gui.Bootstrap;
 
@@ -22,12 +23,19 @@ public class SquiddyBootstrapInterceptor : IHostedService
         _serviceProvider = serviceProvider;
         _serviceCollection = serviceCollection;
         applicationLifetime.ApplicationStarted.Register(OnStarted);
+        applicationLifetime.ApplicationStopping.Register(OnStopping);
+    }
+
+    private void OnStopping()
+    {
+        Application.Shutdown();
     }
 
     private void OnStarted()
     {
         _logger.LogInformation("Squiddy has started!");
         _bootstrap.LoadServices(_serviceProvider, _serviceCollection);
+        _bootstrap.RunApplicationAsync(_serviceProvider).GetAwaiter().GetResult();
     }
 
     public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;

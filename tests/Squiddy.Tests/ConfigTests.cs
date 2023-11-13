@@ -15,7 +15,7 @@ public class Tests
     {
         var sampleConfig = new SquiddyConfig
         {
-            Test = "test"
+
         };
 
         var jsonString = await sampleConfig.SerializeWithType();

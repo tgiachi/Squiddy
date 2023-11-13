@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Tests", "tests\Squi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Gui", "src\Squiddy.Gui\Squiddy.Gui.csproj", "{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squiddy.Ui.Core", "src\Squiddy.Ui.Core\Squiddy.Ui.Core.csproj", "{C32E3FD8-45D5-4B85-BA7C-70A30A8619F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C39DA76-0C89-48A1-B2A1-75AD3796BB0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C32E3FD8-45D5-4B85-BA7C-70A30A8619F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C32E3FD8-45D5-4B85-BA7C-70A30A8619F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C32E3FD8-45D5-4B85-BA7C-70A30A8619F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C32E3FD8-45D5-4B85-BA7C-70A30A8619F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
