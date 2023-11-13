@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Reflection;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using Squiddy.Core.Attributes.Windows;
 using Squiddy.Ui.Core.Interfaces.Windows;
 using Terminal.Gui;
 
@@ -12,10 +14,12 @@ public abstract class AbstractBaseWindow<TViewModel> : Window, IBaseWindow<TView
 
     protected AbstractBaseWindow(ILogger<AbstractBaseWindow<TViewModel>> logger, TViewModel viewModel)
     {
+        SetTitleFromAttribute();
         Logger = logger;
         ViewModel = viewModel;
     }
 
+    private void SetTitleFromAttribute() => Title = GetType().GetCustomAttribute<WindowAttribute>()?.Title ?? "Untitled";
 
     object? IViewFor.ViewModel
     {

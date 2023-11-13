@@ -1,6 +1,7 @@
-﻿namespace Squiddy.Gui.Controls.ViewModels;
+﻿using ReactiveUI;
 
-public class MenuBarControlViewModel
+namespace Squiddy.Gui.Controls.ViewModels;
+
+public class MenuBarControlViewModel : ReactiveObject
 {
-    
 }

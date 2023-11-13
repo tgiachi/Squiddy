@@ -12,18 +12,21 @@ public class SquiddyBootstrapInterceptor : IHostedService
     private readonly ISquiddyBootstrap _bootstrap;
     private readonly IServiceProvider _serviceProvider;
     private readonly IServiceCollection _serviceCollection;
+    private readonly IHost _host;
 
     public SquiddyBootstrapInterceptor(
         ILogger<SquiddyBootstrapInterceptor> logger, IHostApplicationLifetime applicationLifetime, IServiceCollection serviceCollection,
-        ISquiddyBootstrap bootstrap, IServiceProvider serviceProvider
+        ISquiddyBootstrap bootstrap, IServiceProvider serviceProvider, IHost host
     )
     {
+        _host = host;
         _logger = logger;
         _bootstrap = bootstrap;
         _serviceProvider = serviceProvider;
         _serviceCollection = serviceCollection;
         applicationLifetime.ApplicationStarted.Register(OnStarted);
         applicationLifetime.ApplicationStopping.Register(OnStopping);
+
     }
 
     private void OnStopping()
@@ -35,7 +38,7 @@ public class SquiddyBootstrapInterceptor : IHostedService
     {
         _logger.LogInformation("Squiddy has started!");
         _bootstrap.LoadServices(_serviceProvider, _serviceCollection);
-        _bootstrap.RunApplicationAsync(_serviceProvider).GetAwaiter().GetResult();
+        _bootstrap.RunApplicationAsync(_serviceProvider, _host).GetAwaiter().GetResult();
     }
 
     public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;

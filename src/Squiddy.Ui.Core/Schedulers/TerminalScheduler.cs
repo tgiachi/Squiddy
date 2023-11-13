@@ -2,7 +2,7 @@
 using System.Reactive.Disposables;
 using Terminal.Gui;
 
-namespace Squiddy.Gui.Schedulers;
+namespace Squiddy.Ui.Core.Schedulers;
 
 public class TerminalScheduler : LocalScheduler
 {

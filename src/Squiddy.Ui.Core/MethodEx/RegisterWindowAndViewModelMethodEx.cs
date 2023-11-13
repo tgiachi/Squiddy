@@ -9,4 +9,8 @@ public static class RegisterWindowAndViewModelMethodEx
     public static IServiceCollection RegisterWindowAndViewModel<TView, TViewModel>(this IServiceCollection serviceCollection)
         where TView : View where TViewModel : class, IReactiveObject =>
         serviceCollection.AddTransient<TView>().AddTransient<TViewModel>();
+
+    public static IServiceCollection RegisterUserControlAndViewModel<TView, TViewModel>(this IServiceCollection serviceCollection)
+        where TView : View where TViewModel : class, IReactiveObject =>
+        serviceCollection.AddTransient<TView>().AddTransient<TViewModel>();
 }

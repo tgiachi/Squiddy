@@ -1,6 +1,7 @@
-﻿namespace Squiddy.Ui.Core.Interfaces.Controls;
+﻿using ReactiveUI;
 
-public class IBaseControl
+namespace Squiddy.Ui.Core.Interfaces.Controls;
+
+public interface IBaseControl<TViewModel> : IViewFor<TViewModel> where TViewModel : class, IReactiveObject
 {
-    
 }
